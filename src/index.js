@@ -1,18 +1,31 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-// import App from './App';
-// import App from './Login';
-// import App from './Register';
-// import App from './Hooks-news';
-import App from './ToDo.js';
-import * as serviceWorker from './serviceWorker';
+import React, { useContext, useReducer } from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import TodosContext from './context';
+import TodosReducer from './reducer';
+
+import * as serviceWorker from "./serviceWorker";
+import TodoList from "./components/TodoList";
+import TodoForm from './components/TodoForm';
+
+
+const App = () => {
+    const initialState = useContext(TodosContext);
+    const [ state, dispatch ] = useReducer(TodosReducer, initialState);
+
+    return (
+        <TodosContext.Provider value={{state, dispatch}}>
+            <TodoForm />
+            <TodoList />
+      </TodosContext.Provider>
+    )
+}
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+        <App />
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want your app to work offline and load faster, you can change
